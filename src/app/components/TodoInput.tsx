@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 interface TodoInputProps {
-  addTodo: (title: string) => void;
+  onAdd: (title: string) => void;
 }
 
 const TodoInput: React.FC<TodoInputProps> = ({ onAdd }) => {

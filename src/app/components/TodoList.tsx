@@ -1,4 +1,5 @@
 import React from "react";
+import TodoItem from "./TodoItem";
 
 interface Todo {
     id: number;
@@ -14,22 +15,13 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete }) => {
     return (
-        <ul>
-            {todos.map(todo) => (
-                <li key={todo.id}>
-                    <span style={{
-                        textDecoration: todo.completed ? "line-through" : "none"
-                    }}
-                    onClick={() => onToggle(todo.id)}
-                    >
-                    {todo.task}
-                    </span>
-                    <button onClick={() => onDelete(todo.id)}>삭제</button>
-                </li>
-            )};
-        </ul>
+      <ul className="space-y-2">
+        {todos.map((todo) => (
+          <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onDelete={onDelete} />
+        ))}
+      </ul>
     );
-};
+  };
 
 export default TodoList;
 
