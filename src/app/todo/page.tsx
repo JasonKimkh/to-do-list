@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Todo {
   id: number;
@@ -9,6 +9,17 @@ interface Todo {
 
 const TodoPage: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    const savedTodo = localStorage.getItem('saveTodo');
+    if(savedTodo) {
+      setTodos(JSON.parse(savedTodo));
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('saveTodo', JSON.stringify(todos));
+  }, [todos]);
 
   const handleAddTask = (task: string) => {
     setTodos((prev) => [...prev, {id : Date.now(), task, completed: false}]);
