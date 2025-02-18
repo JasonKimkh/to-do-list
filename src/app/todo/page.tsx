@@ -1,5 +1,9 @@
+'use client'
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import TodoInput from "../components/TodoInput";
+import TodoList from "../components/TodoList";
 
 interface Todo {
   id: number;
@@ -38,8 +42,19 @@ const TodoPage: React.FC = () => {
   };
 
   return (
-    <main className="max-w xl mx-autu p-4">
-      <h1 className="text-2xl font-bold mb-4">To-Do</h1>
+    <main className="max-w xl mx-autu p-4 bg-white shadow-md rounded-lg">
+      <h1 className="text-2xl font-bold mb-4 text-center">To-Do List</h1>
+
+      <TodoInput
+      onAdd={handleAddTask}
+      ></TodoInput>
+
+      <TodoList
+      todos={todos}
+      onToggle={handleToggleComplete}
+      onDelete={handleDeleteTask}
+      >
+      </TodoList>
     </main>
   )
 
@@ -48,3 +63,4 @@ const TodoPage: React.FC = () => {
 }
 
 
+export default TodoPage;

@@ -17,14 +17,21 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAdd }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="flex gap-2 mb-4"
+        onSubmit={handleSubmit}
+        >
             <input
             type="text"
             value={task}
             onChange={(e) => setTask(e.target.value)}
             placeholder="새 작업 추가"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></input>
-            <button type="submit">추가</button>
+            <button 
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+            type="submit">
+                추가
+                </button>
         </form>
     )
 }
