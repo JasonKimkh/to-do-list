@@ -32,7 +32,7 @@ const TodoPage: React.FC = () => {
   const handleToggleComplete = (id: number) => {
     setTodos((prev) => 
     prev.map((todo) =>
-    todo.id === id ? {...todo, complted: !todo.completed} : todo
+    todo.id === id ? {...todo, completed: !todo.completed} : todo
       )
     );
   };
