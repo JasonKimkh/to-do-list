@@ -7,6 +7,7 @@ import { Todo } from "../interface/Todo";
 
 const TodoPage: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [showCompleted, setShowCompleted] = useState<boolean>(true);
 
   useEffect(() => {
     const savedTodo = localStorage.getItem('saveTodo');
@@ -43,8 +44,16 @@ const TodoPage: React.FC = () => {
       onAdd={handleAddTask}
       ></TodoInput>
 
+     <button
+        onClick={() => setShowCompleted((prev) => !prev)}
+        className="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
+      >
+        {showCompleted ? "완료된 항목 숨기기" : "완료된 항목 보기"}
+      </button>
+
       <TodoList
       todos={todos}
+      showCompleted={showCompleted}
       onToggle={handleToggleComplete}
       onDelete={handleDeleteTask}
       >
