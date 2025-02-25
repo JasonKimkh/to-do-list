@@ -8,6 +8,8 @@ import { Todo } from "../interface/Todo";
 const TodoPage: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [showCompleted, setShowCompleted] = useState<boolean>(true);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editTask, setEditTask] = useState<string>("");
 
   useEffect(() => {
     const savedTodo = localStorage.getItem('saveTodo');
@@ -36,6 +38,20 @@ const TodoPage: React.FC = () => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   };
 
+  const startEditing = (id: number, task: string) => {
+    setEditingId(id);
+    setEditTask(task);
+  }
+
+  const handleSaveEdit = (id: number) => {
+    setTodos((prev) => 
+    prev.map((todo) => 
+    todo.id === id ? {...todo, task: editTask} : todo
+    )
+    );
+    setEditingId(null);
+  }
+
   return (
     <main className="max-w xl mx-autu p-4 bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-4 text-center">To-Do List</h1>
@@ -56,6 +72,11 @@ const TodoPage: React.FC = () => {
       showCompleted={showCompleted}
       onToggle={handleToggleComplete}
       onDelete={handleDeleteTask}
+      editingId={editingId}          
+      editTask={editTask}            
+      startEditing={startEditing}    
+      setEditTask={setEditTask}     
+      handleSaveEdit={handleSaveEdit} 
       >
       </TodoList>
     </main>

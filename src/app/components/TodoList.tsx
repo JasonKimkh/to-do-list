@@ -3,22 +3,46 @@ import TodoItem from "./TodoItem";
 import { Todo } from "../interface/Todo";
 
 interface TodoListProps {
-    todos: Todo[];
-    onToggle: (id: number) => void;
-    onDelete: (id: number) => void;
+  todos: Todo[];
+  showCompleted: boolean;
+  onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
+  editingId: number | null;
+  editTask: string;
+  startEditing: (id: number, task: string) => void;
+  setEditTask: (task: string) => void;
+  handleSaveEdit: (id: number) => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete }) => {
+const TodoList: React.FC<TodoListProps> = ({ 
+  todos, 
+  showCompleted,   
+  onToggle,
+  onDelete,
+  editingId,
+  editTask,
+  startEditing,
+  setEditTask,
+  handleSaveEdit 
+}) => {
     return (
-      <ul className="space-y-2 bg-white p-4 shadow rounded-lg">
-       {todos.length === 0 ? (
-        <p className="text-center text-gray-500">할 일이 없습니다.</p>
-      ) : (
-        todos.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onDelete={onDelete} />
-        ))
-      )}
-      </ul>
+      <ul>
+      {todos
+        .filter((todo) => showCompleted || !todo.completed) // 완료된 항목 숨기기
+        .map((todo) => (
+          <TodoItem
+          key={todo.id}
+          todo={todo}
+          onToggle={onToggle}
+          onDelete={onDelete}
+          editingId={editingId}
+          editTask={editTask}
+          startEditing={startEditing}
+          setEditTask={setEditTask}
+          handleSaveEdit={handleSaveEdit}
+        />
+        ))}
+    </ul>
     );
   };
 
