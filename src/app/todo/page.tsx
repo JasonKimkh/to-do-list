@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import TodoInput from "../components/TodoInput";
 import TodoList from "../components/TodoList";;
 import { Todo } from "../interface/Todo";
+import { DropResult } from "@hello-pangea/dnd";
 
 const TodoPage: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -52,6 +53,18 @@ const TodoPage: React.FC = () => {
     setEditingId(null);
   }
 
+  const handleDragEnd = (result: DropResult) => {
+    if(!result.destination) return;
+
+    const newTodos = [...todos];
+    const [moveItem] = newTodos.splice(result.source.index, 1);
+
+    newTodos.splice(result.destination.index, 0, moveItem);
+
+    setTodos(newTodos);
+  }
+
+
   return (
     <main className="max-w xl mx-autu p-4 bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-4 text-center">To-Do List</h1>
@@ -76,7 +89,8 @@ const TodoPage: React.FC = () => {
       editTask={editTask}            
       startEditing={startEditing}    
       setEditTask={setEditTask}     
-      handleSaveEdit={handleSaveEdit} 
+      handleSaveEdit={handleSaveEdit}
+      onDragEnd={handleDragEnd}
       >
       </TodoList>
     </main>
